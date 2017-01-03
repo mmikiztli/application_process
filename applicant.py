@@ -7,6 +7,21 @@ class Applicant():
         self.email = raw_data[4]
         self.application_code = raw_data[5]
 
+    def __eq__(self, other):
+        if type(other) is type(self):
+            return self.__dict__ == other.__dict__
+        return False
+
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
+    def __hash__(self):
+        return hash(tuple(sorted(self.__dict__.items())))
+
+    @property
+    def full_name(self):
+        return self.first_name + ' ' + self.last_name
+
     @staticmethod
     def get_all():
         from db import Database
@@ -19,7 +34,12 @@ class Applicant():
     # }, ...]
     @classmethod
     def _4_specific_applicant_by_first_name(cls):
-        pass
+        from db import Database
+        from matchers import matcher
+        from matchers import applicant_by_first_name
+
+        return [{'full_name': applicant.full_name} \
+            for applicant in Database.find_matching_applicants(matcher(applicant_by_first_name, 'Carol'))]
 
     # Return the full name, as a full_name property of all the applicants, whose email ends with '@adipiscingenimmi.edu'
     # returns: list of dictionaries

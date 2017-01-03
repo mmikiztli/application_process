@@ -1,3 +1,6 @@
+from mentor import Mentor
+from applicant import Applicant
+
 class Database():
     mentors_data = [
         [1, 'Attila', 'Molnár', 'Atesz', '003670/630-0539', 'attila.molnar@codecool.com', 'Miskolc', 23],
@@ -24,10 +27,52 @@ class Database():
 
     @classmethod
     def get_mentors(cls):
-        from mentor import Mentor
         return [Mentor(raw_mentor) for raw_mentor in cls.mentors_data]
 
     @classmethod
     def get_applicants(cls):
-        from applicant import Applicant
         return [Applicant(raw_applicant) for raw_applicant in cls.applicants_data]
+
+    @classmethod
+    def find_matching_applicants(cls, matcher):
+        return [Applicant(raw_applicant) for raw_applicant in cls.applicants_data if matcher(Applicant(raw_applicant))]
+
+    @classmethod
+    def find_matching_mentors(cls, matcher):
+        return [Mentor(raw_mentor) for raw_mentor in cls.mentors_data if matcher(Applicant(raw_mentor))]
+
+    @classmethod
+    def insert_applicant(cls, applicant):
+        cls.applicants_data.append(cls._raw_applicant(applicant))
+
+    @classmethod
+    def insert_mentor(cls, mentor):
+        cls.mentors_data.append(cls._raw_mentor(mentor))
+
+    @classmethod
+    def delete_applicants(cls, matcher):
+        cls.applicants_data = [raw_applicant for raw_applicant in cls.applicants_data if matcher(Applicant(raw_applicant))]
+
+    @classmethod
+    def delete_mentors(cls, matcher):
+        cls.mentors_data = [raw_mentor for raw_mentor in cls.mentors_data if matcher(Applicant(raw_mentor))]
+
+    @classmethod
+    def _raw_applicant(cls, applicant):
+        return [applicant.id,
+                applicant.first_name,
+                applicant.last_name,
+                applicant.phone_number,
+                applicant.email,
+                applicant.application_code]
+
+    @classmethod
+    def _raw_mentor(cls, mentor):
+        return [mentor.id,
+                mentor.first_name,
+                mentor.last_name,
+                mentor.nick_name ,
+                mentor.phone_number,
+                mentor.email,
+                mentor.city,
+                mentor.favourite_number]
