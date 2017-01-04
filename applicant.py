@@ -1,4 +1,5 @@
 class Applicant():
+
     def __init__(self, raw_data):
         self.id = raw_data[0]
         self.first_name = raw_data[1]
@@ -22,11 +23,6 @@ class Applicant():
     def full_name(self):
         return self.first_name + ' ' + self.last_name
 
-    @staticmethod
-    def get_all():
-        from db import Database
-        return Database.get_applicants()
-
     # Return the full name, as a full_name property of all the applicants, whose name is Carol
     # returns: list of dictionaries
     # example: [{
@@ -34,12 +30,8 @@ class Applicant():
     # }, ...]
     @classmethod
     def _4_specific_applicant_by_first_name(cls):
-        from db import Database
-        from matchers import matcher
-        from matchers import applicant_by_first_name
-
-        return [{'full_name': applicant.full_name} \
-            for applicant in Database.find_matching_applicants(matcher(applicant_by_first_name, 'Carol'))]
+        from queries import find_applicant_by_first_name
+        return find_applicant_by_first_name('Carol')
 
     # Return the full name, as a full_name property of all the applicants, whose email ends with '@adipiscingenimmi.edu'
     # returns: list of dictionaries
@@ -48,7 +40,8 @@ class Applicant():
     # }, ...]
     @classmethod
     def _5_specific_applicant_by_email_domain(cls):
-        pass
+        from queries import find_applicant_by_email
+        return find_applicant_by_email('@adipiscingenimmi.edu')
 
     # Insert a the Applicant into Database.applicants_data,
     # and return a filtered list, where we only add the data of Markus.
@@ -70,7 +63,8 @@ class Applicant():
     # }]
     @classmethod
     def _6_inserting_a_new_applicant(cls):
-        pass
+        from queries import insert_and_find_applicant_by_all
+        return insert_and_find_applicant_by_all(Applicant([11, 'Markus', 'Schaffarzyk', '003620/725-2666', 'djnovus@groovecoverage.com', 54823]))
 
     # Update an Applicant in the applicants_data, and returns a filtered dictionary list for checking.
     # Story: Jemima Foreman, an applicant called us, that her phone number changed to: 003670/223-7459
@@ -79,7 +73,8 @@ class Applicant():
     # }]
     @classmethod
     def _7_updating_data(cls):
-        pass
+        from queries import update_phone_by_full_name
+        return update_phone_by_full_name("Jemima Foreman", '003670/223-7459')
 
     # Delete lines from the applicants_data, based on a filter condition
     # Story: Arsenio, an applicant called us, that he and his friend applied to Codecool.
@@ -90,4 +85,5 @@ class Applicant():
     # example: 2
     @classmethod
     def _8_deleting_applicants(cls):
-        pass
+        from queries import delete_applicants_by_email
+        return delete_applicants_by_email("@mauriseu.net")
