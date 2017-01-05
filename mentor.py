@@ -1,14 +1,14 @@
 class Mentor():
 
-    def __init__(self, raw_data):
-        self.id = raw_data[0]
-        self.first_name = raw_data[1]
-        self.last_name = raw_data[2]
-        self.nick_name = raw_data[3]
-        self.phone_number = raw_data[4]
-        self.email = raw_data[5]
-        self.city = raw_data[6]
-        self.favourite_number = raw_data[7]
+    def __init__(self, id, first_name, last_name, nick_name, phone_number, email, city, favourite_number):
+        self.id = id
+        self.first_name = first_name
+        self.last_name = last_name
+        self.nick_name = nick_name
+        self.phone_number = phone_number
+        self.email = email
+        self.city = city
+        self.favourite_number = favourite_number
 
     # Return the 2 name property of all the mentors
     # returns: list of dictionaries
