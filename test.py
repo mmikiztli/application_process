@@ -56,11 +56,11 @@ class application_process_test_case(unittest.TestCase):
         self.assertEqual(result, 42)
 
     def test_3_greatest_favourite_number_different_value(self):
-        original_favourite_number_of_first_mentor = Database.mentors_data[0][-1]
-        Database.mentors_data[0][-1] = 927
+        original_favourite_number_of_first_mentor = Database.mentors_data[0].favourite_number
+        Database.mentors_data[0].favourite_number = 927
         result = Mentor._3_greatest_favourite_number()
         self.assertEqual(result, 927)
-        Database.mentors_data[0][-1] = original_favourite_number_of_first_mentor
+        Database.mentors_data[0].favourite_number = original_favourite_number_of_first_mentor
 
     def test_4_specific_applicant_by_first_name_list_type_returned(self):
         result = Applicant._4_specific_applicant_by_first_name()

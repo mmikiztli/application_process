@@ -1,6 +1,6 @@
 
-def create_filter(filtering_function, value):
-    return lambda element: filtering_function(element, value)
+def closure(function, value):
+    return lambda element: function(element, value)
 
 
 def applicant_by_all(applicant, other):
