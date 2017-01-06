@@ -1,4 +1,3 @@
-from db import Database
 from mentor import Mentor
 from applicant import Applicant
 

@@ -62,7 +62,7 @@ class Database:
         cls.applicants_data.append(deepcopy(applicant))
 
     @classmethod
-    def update_applicant(cls, condition, update_operation):
+    def update_applicants(cls, condition, update_operation):
         for applicant in cls.applicants_data:
             if condition(applicant):
                 update_operation(applicant)
